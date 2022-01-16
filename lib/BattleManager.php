@@ -5,7 +5,7 @@ class BattleManager
     /**
      * Our complex fighting algorithm!
      *
-     * @return array With keys winning_ship, losing_ship & used_jedi_powers
+     * @return BattleResult
      */
     public function battle(Ship $ship1, $ship1Quantity, Ship $ship2, $ship2Quantity)
     {
@@ -48,6 +48,7 @@ class BattleManager
             $losingShip = $ship2;
             $usedJediPowers = $ship1UsedJediPowers;
         }
+        return new BattleResult($usedJediPowers, $winningShip, $losingShip);
 
         return array(
             'winning_ship' => $winningShip,
