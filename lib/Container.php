@@ -2,30 +2,52 @@
 
 class Container
 {
-    public $configuration;
+    private $configuration;
+    private $shipLoader;
+    private $battleManager;
+
 
     /**
      * @param array $configuration
      */
-    public function __construct( array $configuration) { $this->configuration = $configuration; }
+    public function __construct(array $configuration) { $this->configuration = $configuration; }
 
     /**
      * @return PDO
      */
-    public function getPDO()
+    private function getPDO()
     {
 
-        $config = array(
-            'user' => 'thelia',
-            'db' => 'mysql:host=localhost;dbname=oo_battle',
-            'password' => 'thelia123'
-        );
         $pdo = new PDO(
-            $config['db'],
-            $config['user'],
-            $config['password']
+            $this->configuration['db'],
+            $this->configuration['user'],
+            $this->configuration['password']
         );
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
+    }
+
+    /**
+     * @return ShipLoader
+     */
+    public function getShipLoader()
+    {
+        if ($this->shipLoader === null)
+        {
+            $this->shipLoader = new ShipLoader($this->getPDO());
+        }
+        return $this->shipLoader;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBattleManager()
+    {
+        if ($this->battleManager === null)
+        {
+            $this->battleManager = new BattleManager();
+        }
+        return $this->battleManager;
     }
 }
