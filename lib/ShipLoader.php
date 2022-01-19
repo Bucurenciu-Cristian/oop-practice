@@ -2,6 +2,7 @@
 
 class ShipLoader
 {
+    private $pdo;
     /**
      * @return Ship[]
      * @throws Exception
@@ -27,12 +28,7 @@ class ShipLoader
      */
     public function findOneById($id)
     {
-        $databaseName = "oo_battle";
-        $databaseUser = "thelia";
-        $databasePassword = 'thelia123';
-        $pdo = new PDO('mysql:host=localhost;dbname=' . $databaseName, $databaseUser, $databasePassword);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+        $pdo = $this->getPDO();
         $statement = $pdo->prepare('SELECT * FROM ship WHERE id = :id');
         $statement->execute(array('id' => $id));
         $shipData = $statement->fetch(PDO::FETCH_ASSOC);
@@ -46,15 +42,26 @@ class ShipLoader
 
     private function queryForShips()
     {
-        $databaseName = "oo_battle";
-        $databaseUser = "thelia";
-        $databasePassword = 'thelia123';
-        $pdo = new PDO('mysql:host=localhost;dbname=' . $databaseName, $databaseUser, $databasePassword);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+        $pdo = $this->getPDO();
         $statement = $pdo->prepare("SELECT * FROM ship");
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @return PDO
+     */
+    private function getPDO()
+    {
+        if ($this->pdo === null)
+        {
+            $databaseName = "oo_battle";
+            $databaseUser = "thelia";
+            $databasePassword = 'thelia123';
+            $this->pdo = new PDO('mysql:host=localhost;dbname=' . $databaseName, $databaseUser, $databasePassword);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+        return $this->pdo;
     }
 
     private function createShipFromData(array $shipData)
@@ -66,4 +73,5 @@ class ShipLoader
         $ship->setJediFactor($shipData['jedi_factor']);
         return $ship;
     }
+
 }
