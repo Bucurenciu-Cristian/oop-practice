@@ -1,11 +1,9 @@
 <?php
 require __DIR__ . '/bootstrap.php';
 
-$shipLoader = new ShipLoader(
-        $config['db'],
-        $config['user'],
-        $config['password']
-);
+$pdo = new PDO($config['db'], $config['user'], $config['password']);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$shipLoader = new ShipLoader($pdo);
 $ships = $shipLoader->getShips();
 
 $ship1Id = isset($_POST['ship1_id']) ? $_POST['ship1_id'] : null;
