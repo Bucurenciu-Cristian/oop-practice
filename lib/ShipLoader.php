@@ -3,6 +3,22 @@
 class ShipLoader
 {
     private $pdo;
+    private $user_db;
+    private $user_pass;
+    private $user_conn;
+
+    /**
+     * @param $user_db
+     * @param $user_pass
+     * @param $user_conn
+     */
+    public function __construct($user_db, $user_conn,$user_pass)
+    {
+        $this->user_db = $user_db;
+        $this->user_conn = $user_conn;
+        $this->user_pass = $user_pass;
+    }
+
     /**
      * @return Ship[]
      * @throws Exception
@@ -55,10 +71,7 @@ class ShipLoader
     {
         if ($this->pdo === null)
         {
-            $databaseName = "oo_battle";
-            $databaseUser = "thelia";
-            $databasePassword = 'thelia123';
-            $this->pdo = new PDO('mysql:host=localhost;dbname=' . $databaseName, $databaseUser, $databasePassword);
+            $this->pdo = new PDO($this->user_db, $this->user_conn, $this->user_pass);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         return $this->pdo;
