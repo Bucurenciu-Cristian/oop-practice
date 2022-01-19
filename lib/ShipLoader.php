@@ -4,33 +4,33 @@ class ShipLoader
 {
     public function getShips()
     {
-        $ships = array();
+        $ships = [];
 
-        $ship = new Ship('Jedi Starfighter');
-        //$ship->setName('Jedi Starfighter');
-        $ship->setWeaponPower(5);
-        $ship->setJediFactor(15);
-        $ship->setStrength(30);
-        $ships['starfighter'] = $ship;
+        $shipsData = $this->queryForShips();;
 
-        $ship2 = new Ship('CloakShape Fighter');
-        $ship2->setWeaponPower(2);
-        $ship2->setJediFactor(2);
-        $ship2->setStrength(70);
-        $ships['cloakshape_fighter'] = $ship2;
+        foreach ($shipsData as $shipData)
+        {
+            $ship = new Ship($shipData['name']);
+            $ship->setWeaponPower($shipData['weapon_power']);
+            $ship->setStrength($shipData['strength']);
+            $ship->setJediFactor($shipData['jedi_factor']);
 
-        $ship3 = new Ship('Super Star Destroyer');
-        $ship3->setWeaponPower(70);
-        $ship3->setJediFactor(0);
-        $ship3->setStrength(500);
-        $ships['super_star_destroyer'] = $ship3;
+            $ships[] = $ship;
 
-        $ship4 = new Ship('RZ-1 A-wing interceptor');
-        $ship4->setWeaponPower(4);
-        $ship4->setJediFactor(4);
-        $ship4->setStrength(50);
-        $ships['rz1_a_wing_interceptor'] = $ship4;
-
+        }
         return $ships;
+    }
+
+    private function queryForShips()
+    {
+        $databaseName = "oo_battle";
+        $databaseUser = "thelia";
+        $databasePassword = 'thelia123';
+        $pdo = new PDO('mysql:host=localhost;dbname=' . $databaseName, $databaseUser, $databasePassword);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $statement = $pdo->prepare("SELECT * FROM ship");
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
