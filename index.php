@@ -5,6 +5,12 @@ $container = new Container($config);
 $shipLoader = $container->getShipLoader();
 $ships = $shipLoader->getShips();
 
+$rebelShip = new RebelShip("Salutare");
+echo "<pre>";
+var_dump($rebelShip->getFavoriteJedi());
+echo "</pre>";
+die;
+$ships[]= $rebelShip;
 $errorMessage = '';
 if (isset($_GET['error']))
 {
