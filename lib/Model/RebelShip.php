@@ -9,4 +9,12 @@ class RebelShip extends Ship
 
         return $temp[$index];
     }
+    public function isFunctional()
+    {
+        return true;
+    }
+    public function getType()
+    {
+        return 'Rebel';
+    }
 }
