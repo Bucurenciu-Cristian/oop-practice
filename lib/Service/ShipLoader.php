@@ -11,7 +11,7 @@ class ShipLoader
     }
 
     /**
-     * @return Ship[]
+     * @return AbstractShip[]
      * @throws Exception
      */
     public function getShips()

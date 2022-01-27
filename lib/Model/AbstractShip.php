@@ -1,6 +1,6 @@
 <?php
 
-class AbstractShip
+abstract class AbstractShip
 {
     private $id;
 
@@ -10,6 +10,11 @@ class AbstractShip
 
     private $strength = 0;
 
+    abstract public function getJediFactor();
+
+    abstract public function getType();
+
+    abstract public function isFunctional();
 
     public function __construct($name)
     {
@@ -41,10 +46,6 @@ class AbstractShip
     /**
      * @return int
      */
-    public function getJediFactor()
-    {
-        return $this->jediFactor;
-    }
     public function setStrength($number)
     {
         if (!is_numeric($number))
