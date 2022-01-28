@@ -2,12 +2,12 @@
 
 class ShipLoader
 {
-    private $pdo;
+    private $shipStorage;
 
 
-    public function __construct($pdo)
+    public function __construct(PdoShipStorage $shipStorage)
     {
-        $this->pdo = $pdo;
+        $this->shipStorage = $shipStorage;
     }
 
     /**
@@ -18,7 +18,7 @@ class ShipLoader
     {
         $ships = [];
 
-        $shipsData = $this->queryForShips();;
+        $shipsData = $this->shipStorage->fetchAllShipsData();
 
         foreach ($shipsData as $shipData)
         {
@@ -35,32 +35,8 @@ class ShipLoader
      */
     public function findOneById($id)
     {
-        $pdo = $this->getPDO();
-        $statement = $pdo->prepare('SELECT * FROM ship WHERE id = :id');
-        $statement->execute(array('id' => $id));
-        $shipData = $statement->fetch(PDO::FETCH_ASSOC);
-
-        if (!$shipData)
-        {
-            return null;
-        }
+        $shipData = $this->shipStorage->fetchSingleShipData($id);
         return $this->createShipFromData($shipData);
-    }
-
-    private function queryForShips()
-    {
-        $pdo = $this->getPDO();
-        $statement = $pdo->prepare("SELECT * FROM ship");
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * @return PDO
-     */
-    private function getPDO()
-    {
-        return $this->pdo;
     }
 
     private function createShipFromData(array $shipData)
