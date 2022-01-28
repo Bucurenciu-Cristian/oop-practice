@@ -27,7 +27,7 @@
     {
         "id": "4",
         "name": "RZ-1 A-wing interceptor",
-        "weapon_power": "4",
+        "weapon_power": "10",
         "jedi_factor": "4",
         "strength": "50",
         "team": "empire"
