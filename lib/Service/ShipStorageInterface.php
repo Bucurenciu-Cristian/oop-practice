@@ -9,7 +9,6 @@ interface ShipStorageInterface
      *  * weapon_power
      *  * strength
      *  * team
-     *
      * @return array
      */
     public function fetchSingleShipData($id);
