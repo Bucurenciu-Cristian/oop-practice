@@ -1,5 +1,5 @@
 <?php
-namespace Battle;
+namespace Service;
 class BattleManager
 {
     // normal battle mode

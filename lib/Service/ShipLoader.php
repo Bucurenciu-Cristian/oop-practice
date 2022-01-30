@@ -1,5 +1,5 @@
 <?php
-
+namespace Service;
 class ShipLoader
 {
     private $shipStorage;
