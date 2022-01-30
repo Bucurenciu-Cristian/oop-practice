@@ -1,5 +1,7 @@
 <?php
 namespace Service;
+use PDO;
+
 class Container
 {
     private $configuration;
