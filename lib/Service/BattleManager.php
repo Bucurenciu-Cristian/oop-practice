@@ -71,11 +71,16 @@ class BattleManager
         }
         return new BattleResult($usedJediPowers, $winningShip, $losingShip);
 
-        return array(
-            'winning_ship' => $winningShip,
-            'losing_ship' => $losingShip,
-            'used_jedi_powers' => $usedJediPowers,
-        );
+
+    }
+
+    public static function getAllBattleTypesWithDescriptions()
+    {
+        return [
+            self::TYPE_NORMAL => 'Normal',
+            self::TYPE_NO_JEDI => 'No Jedi Powers',
+            self::TYPE_ONLY_JEDI => 'Only Jedi Powers',
+        ];
     }
     private function didJediDestroyShipUsingTheForce(AbstractShip $ship)
     {
