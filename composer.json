@@ -1,0 +1,19 @@
+{
+  "autoload": {
+    "psr-4": {
+      "": "lib/"
+    }
+  },
+  "name": "vendor_name/lib",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "kicky",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+  }
+}
