@@ -1,5 +1,7 @@
 <?php
 namespace Model;
+use Exception;
+
 abstract class AbstractShip
 {
     private $id;
@@ -43,14 +45,16 @@ abstract class AbstractShip
     {
         return $this->strength;
     }
+
     /**
      * @return int
+     * @throws Exception
      */
     public function setStrength($number)
     {
         if (!is_numeric($number))
         {
-            throw new \Exception('Invalid strength passed ' . $number);
+            throw new Exception('Invalid strength passed ' . $number);
         }
 
         $this->strength = $number;

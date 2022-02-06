@@ -21,7 +21,15 @@ class ShipLoader
     {
         $ships = [];
 
-        $shipsData = $this->shipStorage->fetchAllShipsData();
+        try
+        {
+            $shipsData = $this->shipStorage->fetchAllShipsData();
+        } catch (\PDOException $e)
+        {
+            trigger_error('Database Exception! '.$e->getMessage());
+            // if all else fails, just return an empty array
+            $shipsData = [];
+        }
 
         foreach ($shipsData as $shipData)
         {

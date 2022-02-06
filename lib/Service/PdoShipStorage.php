@@ -1,6 +1,8 @@
 <?php
 namespace Service;
 
+use InvalidArgumentException;
+
 class PdoShipStorage implements ShipStorageInterface
 {
     private $pdo;
@@ -13,6 +15,7 @@ class PdoShipStorage implements ShipStorageInterface
 
     public function fetchAllShipsData()
     {
+        //        throw new InvalidArgumentException("Ba esti prost?");
         $pdo = $this->pdo;
         $statement = $pdo->prepare("SELECT * FROM ship");
         $statement->execute();
